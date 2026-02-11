@@ -4,13 +4,13 @@
     "label": "Goal Type",
     "value": "manual",
     "options": {
-      "manual": "🖐️ Manual (chat commands only)",
-      "follower": "👥 Twitch: Followers",
-      "subscriber": "📺 Twitch/YT: Subscribers",
-      "tip": "💰 Tips/Donations",
-      "cheer": "💎 Twitch: Bits/Cheers",
-      "member": "⭐ YouTube: Members",
-      "superchat": "💬 YouTube: Super Chats"
+      "manual": "🖐️ Manual - Use chat commands only",
+      "follower": "👥 Twitch - New Followers",
+      "subscriber": "📺 Twitch - Subscribers (includes gift subs)",
+      "tip": "💰 All Platforms - Tips & Donations",
+      "cheer": "💎 Twitch - Bits/Cheers",
+      "member": "⭐ YouTube - Channel Members",
+      "superchat": "💬 YouTube - Super Chats"
     },
     "group": "📊 Goal Settings"
   },
@@ -31,6 +31,14 @@
     "label": "Goal Target",
     "value": 100,
     "min": 1,
+    "max": 1000000,
+    "group": "📊 Goal Settings"
+  },
+  "startingOffset": {
+    "type": "number",
+    "label": "Starting Offset (adjust SE count, e.g. -408 or +50)",
+    "value": 0,
+    "min": -1000000,
     "max": 1000000,
     "group": "📊 Goal Settings"
   },
@@ -61,7 +69,7 @@
   "goalTitle": {
     "type": "text",
     "label": "Title Text",
-    "value": "DAILY QUEST",
+    "value": "Valentine Goal",
     "group": "📝 Title"
   },
   "titlePosition": {
@@ -69,10 +77,14 @@
     "label": "Title Position",
     "value": "top",
     "options": {
-      "top": "⬆️ Above",
-      "bottom": "⬇️ Below",
-      "left": "⬅️ Left",
-      "right": "➡️ Right",
+      "top": "⬆️ Above (center)",
+      "top-left": "↖️ Above (left)",
+      "top-right": "↗️ Above (right)",
+      "bottom": "⬇️ Below (center)",
+      "bottom-left": "↙️ Below (left)",
+      "bottom-right": "↘️ Below (right)",
+      "left": "⬅️ Left of bar",
+      "right": "➡️ Right of bar",
       "hidden": "🚫 Hidden"
     },
     "group": "📝 Title"
@@ -80,10 +92,11 @@
   "titleAlign": {
     "type": "dropdown",
     "label": "Title Align To (when above/below)",
-    "value": "widget",
+    "value": "bar",
     "options": {
-      "widget": "📦 Whole widget (bar + icon)",
-      "bar": "📊 Bar only"
+      "row": "🎯 Bar + Icon row",
+      "bar": "📊 Bar only",
+      "widget": "📦 Whole widget"
     },
     "group": "📝 Title"
   },
@@ -92,8 +105,12 @@
     "label": "Progress Values (0/100)",
     "value": "below",
     "options": {
-      "below": "⬇️ Below bar",
-      "above": "⬆️ Above bar",
+      "below": "⬇️ Below (center)",
+      "below-left": "↙️ Below (left)",
+      "below-right": "↘️ Below (right)",
+      "above": "⬆️ Above (center)",
+      "above-left": "↖️ Above (left)",
+      "above-right": "↗️ Above (right)",
       "inside-left": "⬅️ Inside bar (left)",
       "inside-center": "⏺️ Inside bar (center)",
       "inside-right": "➡️ Inside bar (right)",
@@ -103,25 +120,97 @@
     },
     "group": "📝 Title"
   },
+  "valuesAlign": {
+    "type": "dropdown",
+    "label": "Values Align To (when above/below)",
+    "value": "bar",
+    "options": {
+      "row": "🎯 Bar + Icon row",
+      "bar": "📊 Bar only",
+      "widget": "📦 Whole widget"
+    },
+    "group": "📝 Title"
+  },
+  "titleFontSize": {
+    "type": "slider",
+    "label": "Title Font Size",
+    "value": 26,
+    "min": 8,
+    "max": 42,
+    "step": 1,
+    "group": "📝 Title"
+  },
+  "valuesFontSize": {
+    "type": "slider",
+    "label": "Values Font Size",
+    "value": 14,
+    "min": 8,
+    "max": 42,
+    "step": 1,
+    "group": "📝 Title"
+  },
+  "widgetBox": {
+    "type": "checkbox",
+    "label": "Widget Background Box",
+    "value": false,
+    "group": "📐 Layout"
+  },
+  "widgetBoxColor": {
+    "type": "colorpicker",
+    "label": "Box Color (override)",
+    "value": "#000000",
+    "group": "📐 Layout"
+  },
+  "titleBox": {
+    "type": "checkbox",
+    "label": "Title Background Box",
+    "value": false,
+    "group": "📝 Title"
+  },
+  "titleBoxColor": {
+    "type": "colorpicker",
+    "label": "Title Box Color (override)",
+    "value": "#000000",
+    "group": "📝 Title"
+  },
+  "titleColor": {
+    "type": "colorpicker",
+    "label": "Title Color",
+    "value": "#D4A57B",
+    "group": "📝 Title"
+  },
+  "valuesColor": {
+    "type": "colorpicker",
+    "label": "Values Color",
+    "value": "#D4A57B",
+    "group": "📝 Title"
+  },
   "colorTheme": {
     "type": "dropdown",
     "label": "Color Theme",
-    "value": "cyberpunk",
+    "value": "love-letter",
     "options": {
       "custom": "🎨 Custom (manual colors)",
-      "cyberpunk": "🌃 Cyberpunk",
-      "synthwave": "🌆 Synthwave",
-      "arcade": "👾 Arcade",
-      "bloodborne": "🩸 Bloodborne",
-      "ocean": "🌊 Ocean",
-      "sakura": "🌸 Sakura",
-      "toxic": "☢️ Toxic",
-      "royal": "👑 Royal",
-      "ice": "❄️ Ice",
-      "fire": "🔥 Fire",
-      "matrix": "💚 Matrix",
-      "sunset": "🌅 Sunset",
-      "kawaii": "🦄 Kawaii"
+      "love-letter": "💌 Love Letter",
+      "strawberry-kiss": "🍓 Strawberry Kiss",
+      "rose-garden": "🌹 Rose Garden",
+      "cupid-arrow": "💘 Cupid's Arrow",
+      "candy-hearts": "🍬 Candy Hearts",
+      "moonlight": "🌙 Moonlight Romance",
+      "sweet-chocolate": "🍫 Sweet Chocolate",
+      "fairy-love": "🧚 Fairy Love",
+      "boba-love": "🧋 Boba Love",
+      "teddy-bear": "🧸 Teddy Bear",
+      "sakura-dream": "🌸 Sakura Dream",
+      "cosmic-love": "💜 Cosmic Love",
+      "honey-bee": "🐝 Honey Bee",
+      "cherry-wine": "🍷 Cherry Wine",
+      "kitty-love": "🐱 Kitty Love",
+      "pixel-heart": "👾 Pixel Heart",
+      "lavender-fields": "💜 Lavender Fields",
+      "love-potion": "🧪 Love Potion",
+      "strawberry-milk": "🥛 Strawberry Milk",
+      "royal-valentine": "👑 Royal Valentine"
     },
     "group": "🎨 Theme"
   },
@@ -137,9 +226,9 @@
   "barHeight": {
     "type": "slider",
     "label": "Bar Height",
-    "value": 32,
+    "value": 50,
     "min": 20,
-    "max": 60,
+    "max": 80,
     "step": 2,
     "group": "📐 Layout"
   },
@@ -164,38 +253,38 @@
   "fillColor1": {
     "type": "colorpicker",
     "label": "Gradient Color 1",
-    "value": "#00fff2",
-    "group": "🎨 Custom Colors"
+    "value": "#F8A4B8",
+    "group": "🎨 Custom Colors (Custom theme)"
   },
   "fillColor2": {
     "type": "colorpicker",
     "label": "Gradient Color 2",
-    "value": "#4361ee",
-    "group": "🎨 Custom Colors"
+    "value": "#E8758B",
+    "group": "🎨 Custom Colors (Custom theme)"
   },
   "fillColor3": {
     "type": "colorpicker",
     "label": "Gradient Color 3",
-    "value": "#9d4edd",
-    "group": "🎨 Custom Colors"
+    "value": "#F2C4CE",
+    "group": "🎨 Custom Colors (Custom theme)"
   },
   "borderColor": {
     "type": "colorpicker",
     "label": "Border Color",
-    "value": "#9d4edd",
-    "group": "🎨 Custom Colors"
+    "value": "#D4A57B",
+    "group": "🎨 Custom Colors (Custom theme)"
   },
   "barBgColor": {
     "type": "colorpicker",
     "label": "Bar Background",
-    "value": "#0d0221",
-    "group": "🎨 Custom Colors"
+    "value": "#FFF5EE",
+    "group": "🎨 Custom Colors (Custom theme)"
   },
   "glowColor": {
     "type": "colorpicker",
     "label": "Glow Color",
-    "value": "#00fff2",
-    "group": "🎨 Custom Colors"
+    "value": "rgba(248,164,184,0.35)",
+    "group": "🎨 Custom Colors (Custom theme)"
   },
   "overflowBehavior": {
     "type": "dropdown",
@@ -215,20 +304,35 @@
     "options": {
       "theme": "✨ Theme Default",
       "none": "🚫 None",
-      "confetti": "🎊 Confetti",
-      "glitch": "⚡ Glitch",
-      "neon": "💫 Neon Burst",
-      "levelup": "🆙 Level Up!",
-      "blood": "🩸 Blood Splatter",
-      "bubbles": "🫧 Bubbles",
-      "petals": "🌸 Cherry Blossoms",
-      "radioactive": "☢️ Radioactive",
-      "sparkles": "✨ Golden Sparkles",
-      "snowflakes": "❄️ Snowflakes",
-      "flames": "🔥 Flames",
-      "matrix": "💚 Code Rain",
-      "sunrays": "☀️ Sun Rays",
-      "kawaii": "💖 Hearts & Unicorns"
+      "love-letters": "💌 Love Letters (SVG Hearts)",
+      "berry-burst": "🍓 Berry Burst (3D Confetti)",
+      "rose-petals": "🌹 Rose Petals (SVG Petals)",
+      "cupid-arrows": "💘 Cupid's Arrows (Fireworks)",
+      "candy-shower": "🍬 Candy Shower (Pastel Confetti)",
+      "starfall": "🌙 Starfall (SVG Stars)",
+      "chocolate-truffles": "🍫 Chocolate Truffles (Gold Hearts)",
+      "fairy-dust": "🧚 Fairy Dust (Butterflies)",
+      "boba-hearts": "🧋 Boba Hearts (Balloons)",
+      "bear-hugs": "🧸 Bear Hugs (Kawaii Clouds)",
+      "real-balloons": "🎈 Real Balloons (SVG 3D)",
+      "kawaii-clouds": "☁️ Kawaii Clouds (With Faces)",
+      "fluffy-clouds": "🌤️ Fluffy Clouds",
+      "fireworks": "🎆 Fireworks (Rocket Burst)",
+      "real-hearts": "❤️ Real Hearts (SVG 3D)",
+      "real-stars": "⭐ Real Stars (SVG Glow)",
+      "confetti": "🎊 3D Confetti",
+      "sparkles": "✨ SVG Sparkles",
+      "kawaii": "💖 Kawaii Mix",
+      "sakura-shower": "🌸 Sakura Shower",
+      "shooting-stars": "🌠 Shooting Stars",
+      "buzzing-hearts": "🐝 Buzzing Hearts",
+      "champagne-bubbles": "🫧 Champagne Bubbles",
+      "paw-hearts": "🐾 Paw Hearts",
+      "pixel-rain": "👾 Pixel Rain",
+      "lavender-drift": "💜 Lavender Drift",
+      "magic-burst": "🧪 Magic Burst",
+      "milk-splash": "🥛 Milk Splash",
+      "royal-shower": "👑 Royal Shower"
     },
     "group": "✨ Effects"
   },
@@ -290,7 +394,7 @@
   "iconSize": {
     "type": "slider",
     "label": "Icon Size",
-    "value": 32,
+    "value": 52,
     "min": 16,
     "max": 80,
     "step": 4,
@@ -299,46 +403,72 @@
   "iconType": {
     "type": "dropdown",
     "label": "Icon Style",
-    "value": "pixel-star",
+    "value": "theme",
     "options": {
+      "theme": "🎨 Theme Default (Kawaii SVG)",
       "custom": "📤 Custom (upload below)",
-      "pixel-star": "★ Pixel Star (SVG)",
-      "pixel-heart": "♥ Pixel Heart (SVG)",
-      "pixel-diamond": "◆ Pixel Diamond (SVG)",
-      "pixel-trophy": "🏆 Pixel Trophy (SVG)",
-      "pixel-coin": "● Pixel Coin (SVG)",
-      "pixel-fire": "🔥 Pixel Fire (SVG)",
-      "pixel-bolt": "⚡ Pixel Lightning (SVG)",
-      "pixel-crown": "♛ Pixel Crown (SVG)",
-      "pixel-sword": "⚔ Pixel Sword (SVG)",
-      "pixel-shield": "🛡 Pixel Shield (SVG)",
-      "pixel-potion": "⚗ Pixel Potion (SVG)",
-      "pixel-gem": "◈ Pixel Gem (SVG)",
-      "pixel-skull": "☠ Pixel Skull (SVG)",
-      "pixel-flower": "✿ Pixel Flower (SVG)",
-      "pixel-music": "♪ Pixel Music (SVG)",
-      "emoji-star": "⭐ Star (Emoji)",
-      "emoji-heart": "❤️ Heart (Emoji)",
-      "emoji-diamond": "💎 Diamond (Emoji)",
-      "emoji-trophy": "🏆 Trophy (Emoji)",
-      "emoji-coin": "🪙 Coin (Emoji)",
-      "emoji-fire": "🔥 Fire (Emoji)",
-      "emoji-bolt": "⚡ Lightning (Emoji)",
-      "emoji-crown": "👑 Crown (Emoji)",
-      "emoji-sword": "⚔️ Sword (Emoji)",
-      "emoji-shield": "🛡️ Shield (Emoji)",
-      "emoji-potion": "🧪 Potion (Emoji)",
-      "emoji-gem": "💠 Gem (Emoji)",
-      "emoji-skull": "💀 Skull (Emoji)",
-      "emoji-flower": "🌸 Flower (Emoji)",
-      "emoji-music": "🎵 Music (Emoji)"
+      "svg-loveletter": "💌 Kawaii Love Letter",
+      "svg-strawberry": "🍓 Kawaii Strawberry",
+      "svg-rose": "🌹 Kawaii Rose",
+      "svg-cupid": "💘 Kawaii Cupid Heart",
+      "svg-candy": "🍬 Kawaii Candy Heart",
+      "svg-moon": "🌙 Kawaii Moon",
+      "svg-chocolate": "🍫 Kawaii Chocolate Box",
+      "svg-fairy": "🧚 Kawaii Fairy",
+      "svg-boba": "🧋 Kawaii Boba Tea",
+      "svg-teddy": "🧸 Kawaii Teddy Bear",
+      "svg-heart": "❤️ Kawaii Heart",
+      "svg-pink-heart": "🩷 Kawaii Pink Heart",
+      "svg-ribbon": "🎀 Kawaii Ribbon",
+      "svg-butterfly": "🦋 Kawaii Butterfly",
+      "svg-sparkle": "✨ Kawaii Sparkle Star",
+      "svg-kiss": "💋 Kawaii Kiss",
+      "svg-cherry": "🍒 Kawaii Cherry",
+      "svg-cupcake": "🧁 Kawaii Cupcake",
+      "svg-lollipop": "🍭 Kawaii Lollipop",
+      "svg-flower": "🌸 Kawaii Blossom",
+      "svg-diamond": "💎 Kawaii Diamond",
+      "svg-crown": "👑 Kawaii Crown",
+      "svg-dove": "🕊️ Kawaii Love Dove",
+      "svg-potion": "🧪 Kawaii Love Potion",
+      "svg-sakura": "🌸 Kawaii Sakura",
+      "svg-planet": "🪐 Kawaii Planet",
+      "svg-bee": "🐝 Kawaii Bee",
+      "svg-wineglass": "🍷 Kawaii Wine Glass",
+      "svg-kitty": "🐱 Kawaii Kitty",
+      "svg-pixel-heart": "👾 Pixel Heart",
+      "svg-lavender": "💜 Kawaii Lavender",
+      "svg-milkcarton": "🥛 Kawaii Milk Carton",
+      "emoji-loveletter": "💌 Love Letter (emoji)",
+      "emoji-strawberry": "🍓 Strawberry (emoji)",
+      "emoji-rose": "🌹 Rose (emoji)",
+      "emoji-cupid": "💘 Cupid (emoji)",
+      "emoji-candy": "🍬 Candy (emoji)",
+      "emoji-moon": "🌙 Moon (emoji)",
+      "emoji-chocolate": "🍫 Chocolate (emoji)",
+      "emoji-fairy": "🧚 Fairy (emoji)",
+      "emoji-boba": "🧋 Boba (emoji)",
+      "emoji-teddy": "🧸 Teddy (emoji)",
+      "emoji-heart": "❤️ Heart (emoji)",
+      "emoji-pink-heart": "🩷 Pink Heart (emoji)",
+      "emoji-sparkle-heart": "💖 Sparkle Heart (emoji)",
+      "emoji-unicorn": "🦄 Unicorn (emoji)",
+      "emoji-star": "⭐ Star (emoji)",
+      "emoji-flower": "🌸 Flower (emoji)",
+      "emoji-crown": "👑 Crown (emoji)"
     },
+    "group": "🖼️ Icon"
+  },
+  "iconFloat": {
+    "type": "checkbox",
+    "label": "Animate Icon Float/Sway",
+    "value": true,
     "group": "🖼️ Icon"
   },
   "iconColor": {
     "type": "colorpicker",
-    "label": "Pixel Icon Color (SVG only)",
-    "value": "#00fff2",
+    "label": "Icon Color",
+    "value": "#F8A4B8",
     "group": "🖼️ Icon"
   },
   "customIcon": {

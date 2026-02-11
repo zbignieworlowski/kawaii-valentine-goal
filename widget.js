@@ -10,6 +10,32 @@ var blondieLastMilestone = 0;
 var blondieLastProgress = 0;
 var blondieEffectDuration = 4000;
 var blondieEffectUID = 0;
+var blondieSeBaseProgress = 0; // Raw StreamElements session value (before manual offset)
+
+// Manual offset persistence (localStorage)
+function blondieGetStorageKey() {
+  var eventType = blondieFieldData.eventType || 'manual';
+  return 'blondieValentineOffset_' + eventType;
+}
+
+function blondieLoadOffset() {
+  try {
+    var saved = localStorage.getItem(blondieGetStorageKey());
+    return saved ? parseInt(saved) || 0 : 0;
+  } catch(e) { return 0; }
+}
+
+function blondieSaveOffset(newOffset) {
+  try {
+    localStorage.setItem(blondieGetStorageKey(), newOffset);
+  } catch(e) {}
+}
+
+function blondieClearOffset() {
+  try {
+    localStorage.removeItem(blondieGetStorageKey());
+  } catch(e) {}
+}
 
 function blondieAdjustColor(color, amount) {
   var hex = color.replace('#', '');
@@ -170,6 +196,25 @@ window.addEventListener('onWidgetLoad', function(obj) {
       }
     }
   }
+
+  // Store SE base progress and apply offsets
+  blondieSeBaseProgress = blondieProgress;
+  console.log('SE session value:', blondieSeBaseProgress);
+
+  // 1. Apply startingOffset from Fields (permanent setting)
+  var fieldsOffset = parseInt(blondieFieldData.startingOffset) || 0;
+  console.log('startingOffset from Fields:', fieldsOffset);
+
+  // 2. Apply localStorage offset (dynamic from commands)
+  var savedOffset = blondieLoadOffset();
+  console.log('localStorage offset:', savedOffset);
+
+  // Apply total offset
+  var totalOffset = fieldsOffset + savedOffset;
+  if (totalOffset !== 0) {
+    blondieProgress = Math.max(0, blondieProgress + totalOffset);
+  }
+  console.log('Final progress:', blondieProgress, '(SE:', blondieSeBaseProgress, '+ offset:', totalOffset, ')');
 
   blondieUpdateBar();
 
@@ -1618,12 +1663,26 @@ function blondieHandleCommand(data) {
   var cmdTarget = (blondieFieldData.cmdTarget || '!target').toLowerCase();
   var cmdClear = (blondieFieldData.cmdClear || '!clear').toLowerCase();
 
-  if (cmd === cmdAdd && val > 0) { blondieProgress += val; blondieIconPulse(); }
-  else if (cmd === cmdDrop && val > 0) { blondieProgress = Math.max(0, blondieProgress - val); }
-  else if (cmd === cmdProgress) { blondieProgress = Math.max(0, val); }
-  else if (cmd === cmdTarget && val > 0) { blondieGoalAmount = val; blondieSetupValuesPosition(); }
-  else if (cmd === cmdClear) { blondieProgress = 0; blondieWasComplete = false; blondieLastMilestone = 0; blondieLastProgress = 0; }
-  else { return; }
+  if (cmd === cmdAdd && val > 0) {
+    blondieProgress += val;
+    blondieSaveOffset(blondieProgress - blondieSeBaseProgress);
+    blondieIconPulse();
+  } else if (cmd === cmdDrop && val > 0) {
+    blondieProgress = Math.max(0, blondieProgress - val);
+    blondieSaveOffset(blondieProgress - blondieSeBaseProgress);
+  } else if (cmd === cmdProgress) {
+    blondieProgress = Math.max(0, val);
+    blondieSaveOffset(blondieProgress - blondieSeBaseProgress);
+  } else if (cmd === cmdTarget && val > 0) {
+    blondieGoalAmount = val;
+    blondieSetupValuesPosition();
+  } else if (cmd === cmdClear) {
+    blondieProgress = 0;
+    blondieWasComplete = false;
+    blondieLastMilestone = 0;
+    blondieLastProgress = 0;
+    blondieClearOffset();
+  } else { return; }
 
   blondieUpdateBar();
 }
